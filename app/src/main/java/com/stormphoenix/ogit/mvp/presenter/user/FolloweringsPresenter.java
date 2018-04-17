@@ -1,0 +1,45 @@
+package com.stormphoenix.ogit.mvp.presenter.user;
+
+import android.content.Context;
+
+import com.stormphoenix.ogit.entity.github.GitUser;
+import com.stormphoenix.ogit.cache.FileCache;
+import com.stormphoenix.ogit.mvp.model.interactor.user.UserInteractor;
+import com.stormphoenix.ogit.mvp.presenter.base.OwnerPresenter;
+import com.stormphoenix.ogit.utils.NetworkUtils;
+import com.stormphoenix.ogit.utils.PreferenceUtils;
+
+import java.util.List;
+
+import retrofit2.Response;
+import rx.Observable;
+
+/**
+ * Created by wanlei on 18-4-2.
+ */
+public class FolloweringsPresenter extends OwnerPresenter {
+    private UserInteractor mInteractor;
+
+    public FolloweringsPresenter(Context context) {
+        super(context);
+        mInteractor = new UserInteractor(context);
+    }
+
+    @Override
+    protected List<GitUser> transformBody(List<GitUser> body) {
+        return body;
+    }
+
+    @Override
+    protected FileCache.CacheType getCacheType() {
+        return FileCache.CacheType.USER_FOLLERINGS;
+    }
+
+    @Override
+    protected Observable<Response<List<GitUser>>> load(int page) {
+        if (!NetworkUtils.isNetworkConnected(mContext)) {
+            return super.load(page);
+        }
+        return mInteractor.loadFollowings(PreferenceUtils.getUsername(mContext), String.valueOf(page));
+    }
+}

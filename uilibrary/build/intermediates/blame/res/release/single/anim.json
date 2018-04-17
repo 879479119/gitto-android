@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_fade_in.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_slide_out_top.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_slide_in_top.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_fade_out.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_popup_exit.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/anim/abc_popup_enter.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/anim/abc_popup_enter.xml"
+    }
+]

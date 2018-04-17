@@ -1,0 +1,101 @@
+package com.stormphoenix.ogit.mvp.presenter.base;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.stormphoenix.ogit.cache.FileCache;
+import com.stormphoenix.ogit.mvp.contract.BaseContract;
+import com.stormphoenix.ogit.mvp.presenter.BasePresenter;
+import com.stormphoenix.ogit.mvp.view.base.BaseUIView;
+import com.stormphoenix.ogit.mvp.view.base.ListItemView;
+import com.stormphoenix.ogit.shares.rx.RxHttpLog;
+import com.stormphoenix.ogit.shares.rx.RxJavaCustomTransformer;
+import com.stormphoenix.ogit.shares.rx.subscribers.DefaultUiSubscriber;
+
+import java.util.List;
+
+import retrofit2.Response;
+import rx.Observable;
+
+/**
+ * Created by wanlei on 18-2-28.
+ */
+
+public abstract class ListItemPresenter<T, R, V extends ListItemView<T>> extends BasePresenter<V> {
+    public static String TAG = ListItemPresenter.class.getClass().getName();
+
+    protected Context mContext = null;
+
+    public ListItemPresenter(Context context) {
+        mContext = context;
+    }
+
+    @Override
+    public void onCreate(Bundle onSavedInstanceState) {
+        super.onCreate(onSavedInstanceState);
+        loadNewlyListItem();
+    }
+
+    public void loadNewlyListItem() {
+        mView.hideProgress();
+        Observable<Response<R>> observable = load(0);
+        if (observable == null) {
+            return;
+        }
+        mView.clearAllItems();
+        observable.compose(RxJavaCustomTransformer.defaultSchedulers())
+                .subscribe(new DefaultUiSubscriber<Response<R>, BaseContract.View>(mView, "network error") {
+                    @Override
+                    public void onNext(Response<R> response) {
+                        RxHttpLog.logResponse(response);
+                        if (response.isSuccessful()) {
+                            List<T> body = transformBody(response.body());
+                            makeDataCached(body);
+                            mView.loadNewlyListItem(body);
+                        } else if (response.code() == 401) {
+                            Log.e(TAG, "onNext: " + response.code());
+                            mView.reLogin();
+                        } else {
+                            Log.e(TAG, "onNext: " + response.code() + " " + response.message());
+                            mView.showMessage(response.message());
+                        }
+                        mView.hideProgress();
+                    }
+                });
+    }
+
+    public void loadMoreListItem() {
+        mView.showProgress();
+
+        // temperary handle
+        if (mView.getListItemCounts() % 10 != 0) {
+            mView.hideProgress();
+            return;
+        }
+
+        Observable<Response<R>> observable = load(mView.getListItemCounts() / 10 + 1);
+        if (observable == null) {
+            mView.hideProgress();
+            return;
+        }
+        observable.compose(RxJavaCustomTransformer.defaultSchedulers())
+                .subscribe(new DefaultUiSubscriber<Response<R>, BaseContract.View>(mView, "network error") {
+                    @Override
+                    public void onNext(Response<R> response) {
+                        RxHttpLog.logResponse(response);
+                        mView.loadMoreListItem(transformBody(response.body()));
+                        mView.hideProgress();
+                    }
+                });
+    }
+
+    protected abstract List<T> transformBody(R body);
+
+    // 这个操作最好要放到 Service　里面进行
+    protected abstract void makeDataCached(List<T> data);
+
+    protected abstract FileCache.CacheType getCacheType();
+
+    protected abstract Observable<Response<R>> load(int page);
+}

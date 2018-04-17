@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorTextPrimary">#1E1E1E</color>
+    <!--<color name="colorTextPrimary">#FFFFFF</color>-->
+    <color name="colorSecondaryPrimary">#212121</color>
+
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorPrimaryLight">#C5CAE9</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <!--<color name="colorPrimary">#009688</color>-->
+    <!--<color name="colorPrimaryDark">#62b900</color>-->
+
+    <!-- 绿色配色方案 -->
+    <!--<color name="colorAccent">#4CAF50</color>-->
+    <!--<color name="colorPrimaryDark">#00796B</color>-->
+    <!--<color name="colorPrimary">#62b900</color>-->
+
+    <!-- 蓝色配色方案 -->
+    <color name="colorPrimary">#5890f9</color>
+    <color name="colorPrimaryDark">#3a85da</color>
+    <color name="colorAccent">#e92d23</color>
+
+    <color name="diff_marker_bg">#EAF2F5</color>
+    <color name="diff_add">#DDFFDD</color>
+    <color name="diff_remove">#FFDDDD</color>
+    <color name="diff_remove_text">#932121</color>
+    <color name="colorPrimaryLight">#B2DFDB</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorIcons">#FFFFFF</color>
+    <color name="colorDivider">#BDBDBD</color>
+    <color name="colorFeedbackEditColor">#EEEEEE</color>
+    <color name="colorFeedbackDotColot">#858585</color>
+    <color name="colorDefaultHeader">#BDBDBD</color>
+
+    <color name="colorPrimarySecond">#455a64</color>
+    <color name="colorTitle">#ffffff</color>
+    <color name="colorFabPressed">#546e7a</color>
+    <!--<color name="colorControlHighlight"></color>-->
+    <!--<color name="colorTitle">#de000000</color>-->
+    <color name="btn_menu_normal">#ffffff</color>
+    <color name="btn_menu_pressed">#40000000</color>
+    <color name="btn_context_menu_text_red">#ffff0000</color>
+    <color name="diff_add_text">#528E4C</color>
+    <color name="background">#F9F9F9</color>
+    <color name="section_subtitle">#555555</color>
+    <color name="inset_outer">#C7C7C7</color>
+    <color name="inset_inner">#FFFFFF</color>
+    <color name="inset_background">#F8F8F8</color>
+    <color name="text_link">#4183C4</color>
+</resources>

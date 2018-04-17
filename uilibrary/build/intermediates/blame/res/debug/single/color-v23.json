@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_default.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_text_material.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/color-v23/abc_tint_btn_checkable.xml"
+    }
+]
