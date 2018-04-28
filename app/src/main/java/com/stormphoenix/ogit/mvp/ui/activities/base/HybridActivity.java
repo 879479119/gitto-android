@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stormphoenix.ogit.R;
+import com.stormphoenix.ogit.bridge.BaseBridge;
+import com.stormphoenix.ogit.bridge.LogMaster;
 import com.stormphoenix.ogit.dagger2.component.DaggerActivityComponent;
 import com.stormphoenix.ogit.dagger2.module.ContextModule;
 import com.stormphoenix.ogit.mvp.presenter.repository.RepositoryPresenter;
@@ -46,9 +48,10 @@ import us.feras.mdv.MarkdownView;
 
 public abstract class HybridActivity extends BaseActivity {
 
-    // TODO: 对于抽象类的理解有问题，还是在这个鬼地方找的id，要不只有用findViewById
 //    @BindView(R.id.user_hybrid)
     LinearLayout container;
+
+    private WebView webView;
 
     public String getUrl(String user, String repo) { return ""; }
 
@@ -57,7 +60,7 @@ public abstract class HybridActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void initWebView(String user, String repo) {
 
-        WebView webView = new WebView(getApplicationContext());
+        webView = new WebView(getApplicationContext());
 
         webView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
@@ -71,6 +74,12 @@ public abstract class HybridActivity extends BaseActivity {
 
         webSettings.setDefaultTextEncodingName("utf-8");
         webSettings.setDomStorageEnabled(true);//设置适应Html5
+        webSettings.setDisplayZoomControls(false);
+
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setSaveFormData(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -108,8 +117,37 @@ public abstract class HybridActivity extends BaseActivity {
 
         String url = getUrl(user, repo);
 
+        // 添加上页面启动时需要的app和ab测试的相关参数
+
+        url = addSearchPart(url);
+
         Log.i(TAG, url);
 
         webView.loadUrl(url);
+
+        addBridge(new BaseBridge(this));
+        addBridge(new LogMaster());
+    }
+
+    public void runJavaScript(final String function, final String... argv) {
+        webView.post(() -> {
+            String arguments = "'" + TextUtils.join("','", argv) + "'";
+            String javascript = "javascript:" + function + "(" + arguments + ");";
+            webView.loadUrl(javascript);
+        });
+    }
+
+    @SuppressLint("JavascriptInterface")
+    public void addBridge(Object object) {
+        webView.addJavascriptInterface(object, object.getClass().getSimpleName());
+    }
+
+    private String addSearchPart(String url) {
+        return url + "?"
+                + "app=" + 213
+                + "&version=" + 123
+                + "&platform=" + 66
+                + "&testId=" + 1
+                + "&paramsId=" + 1;
     }
 }
