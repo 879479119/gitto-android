@@ -144,6 +144,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
      * 若登录成功，则加载用户信息
      */
     public void loadUser() {
+        Log.i(TAG, "loadUser: ");
         mTokenInteractor.loadUser(PreferenceUtils.getUsername(mContext))
                 .compose(RxJavaCustomTransformer.defaultSchedulers())
                 .subscribe(new DefaultUiSubscriber<Response<GitUser>, BaseUIView>(mView, mContext.getResources().getString(R.string.network_error)) {

@@ -1,10 +1,12 @@
 package com.stormphoenix.ogit.log;
 
+import java.util.List;
+
 public class Log {
 
     private Base base;
 
-    private AB ab;
+    private List<AB> abList;
 
     private Detail detail;
 
@@ -16,12 +18,12 @@ public class Log {
         this.base = base;
     }
 
-    public AB getAb() {
-        return ab;
+    public List<AB> getAbList() {
+        return abList;
     }
 
-    public void setAb(AB ab) {
-        this.ab = ab;
+    public void setAbList(List<AB> abList) {
+        this.abList = abList;
     }
 
     public Detail getDetail() {

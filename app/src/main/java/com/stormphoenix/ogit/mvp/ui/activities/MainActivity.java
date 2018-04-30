@@ -100,6 +100,7 @@ public class MainActivity extends TabPagerActivity<FragmentsAdapter> implements 
         issuePresenter.onAttachView(this);
         mainPresenter.onCreate(savedInstanceState);
         issuePresenter.onCreate(savedInstanceState);
+        mainPresenter.fetchABInfo();
         initViews();
         loadPagerData();
     }

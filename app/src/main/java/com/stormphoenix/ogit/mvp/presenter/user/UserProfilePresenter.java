@@ -10,6 +10,8 @@ import com.stormphoenix.ogit.entity.github.GitEmpty;
 import com.stormphoenix.ogit.entity.github.GitRepository;
 import com.stormphoenix.ogit.entity.github.GitUser;
 import com.stormphoenix.ogit.R;
+import com.stormphoenix.ogit.entity.log.ABInfo;
+import com.stormphoenix.ogit.mvp.model.interactor.LogInteractor;
 import com.stormphoenix.ogit.mvp.model.interactor.user.UserInteractor;
 import com.stormphoenix.ogit.mvp.presenter.base.OwnerProfilePresenter;
 import com.stormphoenix.ogit.mvp.view.UserDetailsView;
@@ -31,6 +33,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit2.Response;
+import rx.Observer;
 import rx.Subscriber;
 
 /**
@@ -41,12 +44,41 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
     public static final String TAG = UserProfilePresenter.class.getSimpleName();
 
     private UserInteractor mInteractor = null;
+    private LogInteractor logInteractor;
     private GitUser mUser;
 
     @Inject
     public UserProfilePresenter(Context context) {
         super(context);
         mInteractor = new UserInteractor(mContext);
+        logInteractor = new LogInteractor(mContext);
+    }
+
+    public void fetchABInfo() {
+        logInteractor.getABInfo(mUser.getName())
+                .compose(RxJavaCustomTransformer.defaultSchedulers())
+                .subscribe((Observer<? super Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>>) new Subscriber<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.stopProgress();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.stopProgress();
+                        mView.showMessage(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>> response) {
+                        if (response.isSuccessful()) {
+                            Log.i(TAG, "onNext: " + response.body().getMeta().getCode());
+                        } else {
+                            mView.showMessage(response.message());
+                        }
+                        mView.stopProgress();
+                    }
+                });
     }
 
     public void refreshViewInfo() {
@@ -180,6 +212,7 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onMainThreadEvent(GitUser user) {
+        Log.i(TAG, "onMainThreadEvent: ");
         this.mUser = user;
         EventBus.getDefault().unregister(this);
         mView.setUpToolbar(mUser.getLogin());

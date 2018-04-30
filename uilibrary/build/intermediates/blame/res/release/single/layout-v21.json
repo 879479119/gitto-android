@@ -1,18 +1,18 @@
 [
     {
-        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_action.xml",
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_action.xml",
         "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/layout-v21/notification_action.xml"
     },
     {
-        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/layout-v21/notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
         "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/layout-v21/notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
         "source": "/Users/rocksama/.android/build-cache/8a6922b60f16d6d9460cd766d04a6caf066ddc93/output/res/layout-v21/notification_template_custom_big.xml"
     }
 ]

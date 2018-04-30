@@ -15,6 +15,7 @@ public class PreferenceUtils {
     public static final String AVATAR_URL = "AVATAR_URL";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "pasword";
+    public static final String ABTEST = "abtest";
     public static final String TOKEN = "token";
     public static final String IS_LOGIN = "is_login";
     public static final String WRAP = "wrap";
@@ -29,6 +30,11 @@ public class PreferenceUtils {
 
     public static String getString(Context context, String key) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(key, null);
+    }
+
+
+    public static String getAbtest(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(ABTEST, null);
     }
 
     public static String getToken(Context context) {

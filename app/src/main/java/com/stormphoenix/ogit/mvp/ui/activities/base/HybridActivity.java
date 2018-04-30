@@ -23,11 +23,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.stormphoenix.ogit.R;
 import com.stormphoenix.ogit.bridge.BaseBridge;
 import com.stormphoenix.ogit.bridge.LogMaster;
 import com.stormphoenix.ogit.dagger2.component.DaggerActivityComponent;
 import com.stormphoenix.ogit.dagger2.module.ContextModule;
+import com.stormphoenix.ogit.entity.github.GitTrendRepository;
+import com.stormphoenix.ogit.entity.log.ABInfo;
+import com.stormphoenix.ogit.entity.log.Response;
 import com.stormphoenix.ogit.mvp.presenter.repository.RepositoryPresenter;
 import com.stormphoenix.ogit.mvp.ui.activities.RepositoryActivity;
 import com.stormphoenix.ogit.mvp.ui.activities.base.BaseActivity;
@@ -40,6 +45,9 @@ import com.stormphoenix.ogit.utils.PreferenceUtils;
 import com.stormphoenix.ogit.utils.TextTools;
 import com.stormphoenix.ogit.widget.KeyValueLabel;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -48,6 +56,7 @@ import us.feras.mdv.MarkdownView;
 
 public abstract class HybridActivity extends BaseActivity {
 
+    private static final String TAG = "HybridActivity";
 //    @BindView(R.id.user_hybrid)
     LinearLayout container;
 
@@ -126,7 +135,7 @@ public abstract class HybridActivity extends BaseActivity {
         webView.loadUrl(url);
 
         addBridge(new BaseBridge(this));
-        addBridge(new LogMaster());
+        addBridge(new LogMaster(getApplicationContext()));
     }
 
     public void runJavaScript(final String function, final String... argv) {
@@ -143,11 +152,15 @@ public abstract class HybridActivity extends BaseActivity {
     }
 
     private String addSearchPart(String url) {
+        String config = PreferenceUtils.getAbtest(getApplicationContext());
+
+//        Gson gson = new Gson();
+//        ABInfo response = gson.fromJson(config, ABInfo.class);
+        Log.i(TAG, "addSearchPart: " + config);
         return url + "?"
                 + "app=" + 213
                 + "&version=" + 123
                 + "&platform=" + 66
-                + "&testId=" + 1
-                + "&paramsId=" + 1;
+                + "&testArray=" + config;
     }
 }

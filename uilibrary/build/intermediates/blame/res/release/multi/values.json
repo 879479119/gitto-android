@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/rocksama/Desktop/OGit-master/uilibrary/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
+        "outputFile": "/Users/rocksama/graduation/gitto-android/uilibrary/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
         "map": [
             {
                 "to": {
@@ -4039,7 +4039,7 @@
                     "endOffset": 34487
                 },
                 "from": {
-                    "file": "/Users/rocksama/Desktop/OGit-master/uilibrary/src/main/res/values/strings.xml",
+                    "file": "/Users/rocksama/graduation/gitto-android/uilibrary/src/main/res/values/strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 4,
