@@ -4,6 +4,18 @@ import java.util.Date;
 
 public class Base {
 
+    public Base(int type, int subType, int app, int platform, int version, String sessionId, String name, Date clientTime, String url) {
+        this.type = type;
+        this.subType = subType;
+        this.app = app;
+        this.platform = platform;
+        this.version = version;
+        this.sessionId = sessionId;
+        this.name = name;
+        this.clientTime = clientTime;
+        this.url = url;
+    }
+
     private int type;
 
     private int subType;

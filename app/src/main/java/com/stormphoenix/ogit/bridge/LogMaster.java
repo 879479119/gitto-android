@@ -11,6 +11,7 @@ import com.stormphoenix.ogit.log.Vacant;
 import com.stormphoenix.ogit.mvp.model.interactor.LogInteractor;
 import com.stormphoenix.ogit.mvp.ui.activities.base.HybridActivity;
 import com.stormphoenix.ogit.shares.rx.RxJavaCustomTransformer;
+import com.stormphoenix.ogit.utils.ActivityUtils;
 import com.stormphoenix.ogit.utils.PreferenceUtils;
 
 import java.io.IOException;
@@ -30,12 +31,15 @@ public class LogMaster {
 
     public static String TAG = LogMaster.class.getSimpleName();
 
-    private LogInteractor logInteractor;
+//    private LogInteractor logInteractor;
     private Context mContext;
+//    private LogStorage logStorage;
+    private Tracker tracker;
 
     public LogMaster(Context context) {
         mContext = context;
-        this.logInteractor = new LogInteractor(context);
+//        this.logInteractor = new LogInteractor(context);
+//        this.logStorage = new LogStorage(mContext);
     }
 
     @JavascriptInterface
@@ -49,33 +53,11 @@ public class LogMaster {
             android.util.Log.e(TAG, err.getMessage());
         }
 
-        sendBatchLogs(string);
+        tracker.saveLogs(string);
+
+        tracker.sendBatchLogs(string);
 
         android.util.Log.i(TAG, log.getBase().getName());
     }
 
-    public void sendBatchLogs (String logs) {
-
-        logInteractor.batchLog(logs)
-                .compose(RxJavaCustomTransformer.defaultSchedulers())
-                .subscribe((Observer<retrofit2.Response<Vacant>>) new Subscriber<retrofit2.Response<Vacant>>() {
-                    @Override
-                    public void onCompleted() {
-                        android.util.Log.i(TAG, "onCompleted: ");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(retrofit2.Response<Vacant> response) {
-                        if (response.isSuccessful()) {
-                            android.util.Log.i(TAG, "onNext: OK sent message");
-                        } else {
-                            android.util.Log.e(TAG, "onNext: Errrrrrrrrrrrrror");
-                        }
-                    }
-                });
-    }
 }

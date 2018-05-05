@@ -1,5 +1,6 @@
 package com.stormphoenix.ogit.log.type;
 
+import com.stormphoenix.ogit.log.Detail;
 import com.stormphoenix.ogit.log.subType.ClickItem;
 import com.stormphoenix.ogit.log.subType.EnterApp;
 import com.stormphoenix.ogit.log.subType.LeaveApp;

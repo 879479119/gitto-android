@@ -26,8 +26,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stormphoenix.ogit.R;
-import com.stormphoenix.ogit.bridge.BaseBridge;
+//import com.stormphoenix.ogit.bridge.BaseBridge;
 import com.stormphoenix.ogit.bridge.LogMaster;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.dagger2.component.DaggerActivityComponent;
 import com.stormphoenix.ogit.dagger2.module.ContextModule;
 import com.stormphoenix.ogit.entity.github.GitTrendRepository;
@@ -35,6 +36,7 @@ import com.stormphoenix.ogit.entity.log.ABInfo;
 import com.stormphoenix.ogit.entity.log.Response;
 import com.stormphoenix.ogit.mvp.presenter.repository.RepositoryPresenter;
 import com.stormphoenix.ogit.mvp.ui.activities.RepositoryActivity;
+import com.stormphoenix.ogit.mvp.ui.activities.UserProfileActivity;
 import com.stormphoenix.ogit.mvp.ui.activities.base.BaseActivity;
 import com.stormphoenix.ogit.mvp.ui.dialog.ProgressDialogGenerator;
 import com.stormphoenix.ogit.mvp.view.RepositoryView;
@@ -97,9 +99,19 @@ public abstract class HybridActivity extends BaseActivity {
 
                 if (Constants.isHybridPage(url)) {
                     if (url.startsWith("http://test.com/repo")) {
+                        Log.i(TAG, "shouldOverrideUrlLoading: " + url);
+                        Tracker.getInstance().trackPageShow("app://repo?url=" + view.getUrl(), "app://user?url=" + url);
+                        ActivityUtils.startActivity(HybridActivity.this, RepositoryActivity.getIntent(HybridActivity.this));
+                        return false;
+                    }
+                    if (url.startsWith("http://test.com/user")) {
+                        Log.i(TAG, "shouldOverrideUrlLoading: " + url);
+                        Tracker.getInstance().trackPageShow("app://user?url=" + view.getUrl(), "app://repo?url=" + url);
+                        ActivityUtils.startActivity(HybridActivity.this, UserProfileActivity.getIntent(HybridActivity.this));
+                        return false;
                     }
                 } else {
-
+                    Log.i(TAG, "最好是跳转到一个单独的webview去");
                 }
 
                 view.loadUrl(url);
@@ -134,7 +146,7 @@ public abstract class HybridActivity extends BaseActivity {
 
         webView.loadUrl(url);
 
-        addBridge(new BaseBridge(this));
+//        addBridge(new BaseBridge(this));
         addBridge(new LogMaster(getApplicationContext()));
     }
 

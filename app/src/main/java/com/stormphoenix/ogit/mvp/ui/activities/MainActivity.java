@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitNotification;
 import com.stormphoenix.ogit.R;
 import com.stormphoenix.ogit.adapters.base.FragmentsAdapter;
@@ -46,6 +48,7 @@ import com.stormphoenix.ogit.mvp.ui.fragments.repository.ReposListFragment;
 import com.stormphoenix.ogit.mvp.view.IssueView;
 import com.stormphoenix.ogit.mvp.view.MainView;
 import com.stormphoenix.ogit.utils.ActivityUtils;
+import com.stormphoenix.ogit.utils.EncodingUtils;
 import com.stormphoenix.ogit.utils.ImageUtils;
 import com.stormphoenix.ogit.utils.PreferenceUtils;
 import com.stormphoenix.ogit.utils.ViewUtils;
@@ -53,6 +56,7 @@ import com.stormphoenix.ogit.widget.manager.NotifyMenuManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -60,6 +64,7 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends TabPagerActivity<FragmentsAdapter> implements NavigationView.OnNavigationItemSelectedListener, MainView, IssueView {
+
     private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.tab_layout)
     SmartTabLayout mTabLayout;
@@ -89,8 +94,32 @@ public class MainActivity extends TabPagerActivity<FragmentsAdapter> implements 
 
     private List<GitNotification> mNotifications = null;
 
+    private long createTime;
+
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        createTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        final long launchTiming = System.currentTimeMillis() - this.createTime;
+
+        Log.i(TAG, "onWindowFocusChanged: " + String.valueOf(launchTiming));
+        String name = PreferenceUtils.getUsername(getApplicationContext());
+
+        String sessionId = EncodingUtils.uuid(name);
+
+        Tracker tracker = new Tracker(getApplicationContext(), sessionId, name);
+        tracker.trackEnterApp("app:main", launchTiming);
+        tracker.trackPageShow("app://main", "");
     }
 
     @Override

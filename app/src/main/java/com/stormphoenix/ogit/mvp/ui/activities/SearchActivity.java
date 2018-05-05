@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.stormphoenix.ogit.adapters.base.FragmentsAdapter;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.mvp.ui.activities.base.TabPagerActivity;
 import com.stormphoenix.ogit.mvp.ui.fragments.search.SearchRepoFragment;
 import com.stormphoenix.ogit.mvp.ui.fragments.search.SearchUsersFragment;
@@ -61,6 +62,8 @@ public class SearchActivity extends TabPagerActivity<FragmentsAdapter> {
     private void search(final String query) {
         this.keyword = query;
         getSupportActionBar().setTitle(query);
+
+        Tracker.getInstance().trackSearch("app://search", query);
     }
 
     public String getSearchKeyWord() {

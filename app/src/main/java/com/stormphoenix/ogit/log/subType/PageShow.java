@@ -2,6 +2,11 @@ package com.stormphoenix.ogit.log.subType;
 
 public class PageShow {
 
+    public PageShow(String sourceUrl, String url) {
+        this.sourceUrl = sourceUrl;
+        this.url = url;
+    }
+
     private String sourceUrl;
 
     private String url;

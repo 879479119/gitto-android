@@ -5,6 +5,14 @@ import com.stormphoenix.ogit.log.subType.PageShow;
 
 public class View {
 
+    public View(PageShow pageShow) {
+        this.pageShow = pageShow;
+    }
+
+    public View(CardShow cardShow) {
+        this.cardShow = cardShow;
+    }
+
     private long activeTime;
 
     private PageShow pageShow;

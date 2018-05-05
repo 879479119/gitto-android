@@ -3,6 +3,8 @@ package com.stormphoenix.ogit.mvp.ui.fragments.search;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitUser;
 import com.stormphoenix.ogit.R;
 import com.stormphoenix.ogit.adapters.GitUserAdapter;
@@ -58,7 +60,9 @@ public class SearchUsersFragment extends SearchFragment<GitUser> {
         mAdapter.addOnViewClickListener(R.id.owner_wrapper, new BaseRecyclerAdapter.OnInternalViewClickListener<GitUser>() {
             @Override
             public void onClick(View parentV, View v, Integer position, GitUser values) {
+                Gson gson = new Gson();
                 EventBus.getDefault().postSticky(values);
+                Tracker.getInstance().trackPageShow("app://search", "app://user?" + gson.toJson(values));
                 ActivityUtils.startActivity(getActivity(), UserProfileActivity.getIntent(getActivity()));
             }
 

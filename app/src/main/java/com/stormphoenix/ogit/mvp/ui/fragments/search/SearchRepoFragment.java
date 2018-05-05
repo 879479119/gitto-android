@@ -3,6 +3,8 @@ package com.stormphoenix.ogit.mvp.ui.fragments.search;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitRepository;
 import com.stormphoenix.ogit.R;
 import com.stormphoenix.ogit.adapters.GitReposAdapter;
@@ -42,7 +44,9 @@ public class SearchRepoFragment extends SearchFragment<GitRepository> {
         mAdapter.addOnViewClickListener(R.id.repository_card_wrapper, new BaseRecyclerAdapter.OnInternalViewClickListener() {
             @Override
             public void onClick(View parentV, View v, Integer position, Object values) {
+                Gson gson = new Gson();
                 EventBus.getDefault().postSticky(values);
+                Tracker.getInstance().trackPageShow("app://search", "app://repo?" + gson.toJson(values));
                 ActivityUtils.startActivity(getActivity(), RepositoryActivity.getIntent(getActivity()));
             }
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.stormphoenix.ogit.R;
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.dagger2.component.DaggerActivityComponent;
 import com.stormphoenix.ogit.dagger2.module.ContextModule;
 import com.stormphoenix.ogit.mvp.presenter.repository.RepositoryPresenter;
