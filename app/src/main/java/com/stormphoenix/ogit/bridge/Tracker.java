@@ -24,6 +24,8 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.stormphoenix.ogit.log.AB;
 import com.stormphoenix.ogit.log.Base;
 import com.stormphoenix.ogit.log.Detail;
 import com.stormphoenix.ogit.log.Vacant;
@@ -31,11 +33,13 @@ import com.stormphoenix.ogit.log.subType.EnterApp;
 import com.stormphoenix.ogit.log.subType.PageShow;
 import com.stormphoenix.ogit.log.subType.SearchItem;
 import com.stormphoenix.ogit.log.type.Event;
+import com.stormphoenix.ogit.log.type.Span;
 import com.stormphoenix.ogit.log.type.View;
 import com.stormphoenix.ogit.mvp.model.interactor.LogInteractor;
 import com.stormphoenix.ogit.mvp.ui.activities.base.HybridActivity;
 import com.stormphoenix.ogit.shares.rx.RxJavaCustomTransformer;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
@@ -70,7 +74,13 @@ public class Tracker {
         this.logStorage = new LogStorage(context);
         this.sessionId = sessionID;
         this.name = name;
-        gson = new Gson();
+        gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 
     static private Tracker instance=null;
@@ -116,6 +126,8 @@ public class Tracker {
     private com.stormphoenix.ogit.log.Log getBasicLog () {
 
         com.stormphoenix.ogit.log.Log log = new com.stormphoenix.ogit.log.Log();
+        // 暂且不要AB测试的参数，android的点暂不参与测试
+        log.setAbList(new ArrayList<>());
         return log;
     }
 
@@ -154,6 +166,18 @@ public class Tracker {
         PageShow pageShow = new PageShow(sourceURL, url);
         View view = new View(pageShow);
         log.setDetail(new Detail(view));
+
+        sendBatchLogs(gson.toJson(log));
+    }
+
+    public void trackNativePageSpan (String url, long time, Date startTime, Date endTime) {
+        com.stormphoenix.ogit.log.Log log = getBasicLog();
+
+        log.setBase(buildBase(2, 8, sessionId, name, url));
+
+        com.stormphoenix.ogit.log.subType.View view = new com.stormphoenix.ogit.log.subType.View(time, url, startTime, endTime);
+        Span span = new Span(view);
+        log.setDetail(new Detail(span));
 
         sendBatchLogs(gson.toJson(log));
     }

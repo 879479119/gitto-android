@@ -53,6 +53,9 @@ public class LogMaster {
             android.util.Log.e(TAG, err.getMessage());
         }
 
+        log.getBase().setName(PreferenceUtils.getUsername(mContext));
+        log.getBase().setSessionId(Tracker.getInstance().getSessionId());
+
         tracker.saveLogs(string);
 
         tracker.sendBatchLogs(string);

@@ -3,8 +3,12 @@ package com.stormphoenix.ogit;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
+import com.stormphoenix.ogit.bridge.Tracker;
+import com.stormphoenix.ogit.utils.EncodingUtils;
 import com.stormphoenix.ogit.utils.ImageUtils;
+import com.stormphoenix.ogit.utils.PreferenceUtils;
 
 /**
  * Created by wanlei on 18-2-25.
@@ -20,6 +24,12 @@ public class OGitApplication extends Application {
         super.onCreate();
         instance = this;
         initImageLoader();
+
+        String name = PreferenceUtils.getUsername(getApplicationContext());
+
+        String sessionId = EncodingUtils.uuid(name);
+
+        new Tracker(getApplicationContext(), sessionId, name);
     }
 
     @Override

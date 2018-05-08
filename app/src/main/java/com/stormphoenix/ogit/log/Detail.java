@@ -2,6 +2,7 @@ package com.stormphoenix.ogit.log;
 
 import com.stormphoenix.ogit.log.type.Event;
 import com.stormphoenix.ogit.log.type.Ping;
+import com.stormphoenix.ogit.log.type.Span;
 import com.stormphoenix.ogit.log.type.View;
 
 public class Detail {
@@ -22,6 +23,10 @@ public class Detail {
         this.view = view;
     }
 
+    public Detail(Span span) {
+        this.span = span;
+    }
+
     private Event event;
 
     private Error error;
@@ -29,6 +34,16 @@ public class Detail {
     private Ping ping;
 
     private View view;
+
+    private Span span;
+
+    public Span getSpan() {
+        return span;
+    }
+
+    public void setSpan(Span span) {
+        this.span = span;
+    }
 
     public Event getEvent() {
         return event;

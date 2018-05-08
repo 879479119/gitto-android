@@ -113,13 +113,19 @@ public class MainActivity extends TabPagerActivity<FragmentsAdapter> implements 
         final long launchTiming = System.currentTimeMillis() - this.createTime;
 
         Log.i(TAG, "onWindowFocusChanged: " + String.valueOf(launchTiming));
-        String name = PreferenceUtils.getUsername(getApplicationContext());
-
-        String sessionId = EncodingUtils.uuid(name);
-
-        Tracker tracker = new Tracker(getApplicationContext(), sessionId, name);
+//        String name = PreferenceUtils.getUsername(getApplicationContext());
+//
+//        String sessionId = EncodingUtils.uuid(name);
+//
+//        Tracker tracker = new Tracker(getApplicationContext(), sessionId, name);
+        Tracker tracker = Tracker.getInstance();
         tracker.trackEnterApp("app:main", launchTiming);
         tracker.trackPageShow("app://main", "");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.stormphoenix.ogit.log.subType;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.stormphoenix.ogit.log.Detail;
 
 import java.util.Date;

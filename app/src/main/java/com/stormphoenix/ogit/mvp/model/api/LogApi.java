@@ -15,6 +15,6 @@ public interface LogApi {
     @GET("http://test.com/api/hybrid/abInfo")
     Observable<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>> loadABInfo(@Query("name") String name);
 
-    @GET("http://log.test.com")
+    @GET("http://log.test.com/utm.gif")
     Observable<Response<Vacant>> batchLog(@Query("logs") String logs);
 }
