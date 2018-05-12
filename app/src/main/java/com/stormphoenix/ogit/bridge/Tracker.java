@@ -25,6 +25,9 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.stormphoenix.ogit.entity.github.GitUser;
+import com.stormphoenix.ogit.entity.log.ABInfo;
 import com.stormphoenix.ogit.log.AB;
 import com.stormphoenix.ogit.log.Base;
 import com.stormphoenix.ogit.log.Detail;
@@ -38,9 +41,13 @@ import com.stormphoenix.ogit.log.type.View;
 import com.stormphoenix.ogit.mvp.model.interactor.LogInteractor;
 import com.stormphoenix.ogit.mvp.ui.activities.base.HybridActivity;
 import com.stormphoenix.ogit.shares.rx.RxJavaCustomTransformer;
+import com.stormphoenix.ogit.utils.PreferenceUtils;
 
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,7 +66,7 @@ public class Tracker {
     public static String TAG = Tracker.class.getSimpleName();
 
     private LogInteractor logInteractor;
-//    private Context mContext;
+    private Context mContext;
     private LogStorage logStorage;
 
     private String sessionId;
@@ -69,7 +76,7 @@ public class Tracker {
 
     public Tracker(Context context, String sessionID, String name) {
         instance = this;
-//        mContext = context;
+        mContext = context;
         this.logInteractor = new LogInteractor(context);
         this.logStorage = new LogStorage(context);
         this.sessionId = sessionID;
@@ -87,6 +94,15 @@ public class Tracker {
 
     public static Tracker getInstance(){
         return instance;
+    }
+
+    public Tracker setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public void saveLogs(String string) {
@@ -120,15 +136,29 @@ public class Tracker {
     }
 
     private Base buildBase(int type, int subType, String sessionId, String name, String url) {
-        return base = new Base(type, subType, 1, 1, 1, sessionId, name, new Date(), url);
+        return base = new Base(type, subType, 1, 3, 2, sessionId, name, new Date(), url);
     }
 
     private com.stormphoenix.ogit.log.Log getBasicLog () {
 
         com.stormphoenix.ogit.log.Log log = new com.stormphoenix.ogit.log.Log();
-        // 暂且不要AB测试的参数，android的点暂不参与测试
-        log.setAbList(new ArrayList<>());
-        return log;
+        String ab = PreferenceUtils.getAbtest(mContext);
+        ABInfo abInfo = gson.fromJson(ab, ABInfo.class);
+        if (ab != null) {
+            List<AB> abs = new ArrayList<>();
+            if (abInfo.getDetail().size() > 0) {
+                for (com.stormphoenix.ogit.entity.log.Detail detail : abInfo.getDetail()) {
+                    abs.add(new AB(detail.getTestId(), detail.getParamsId()));
+                }
+            }
+
+            // 暂且不要AB测试的参数，android的点暂不参与测试
+            log.setAbList(abs);
+            return log;
+        } else {
+            log.setAbList(new ArrayList<>());
+            return log;
+        }
     }
 
 
@@ -159,6 +189,7 @@ public class Tracker {
     }
 
     public void trackPageShow (String sourceURL, String url) {
+        Log.i(TAG, "trackPageShow: ");
         com.stormphoenix.ogit.log.Log log = getBasicLog();
 
         log.setBase(buildBase(3, 10, sessionId, name, url));

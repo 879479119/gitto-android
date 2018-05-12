@@ -2,6 +2,7 @@ package com.stormphoenix.ogit.mvp.model.interactor;
 
 import android.content.Context;
 
+import com.stormphoenix.ogit.R;
 import com.stormphoenix.ogit.entity.github.GitRepository;
 import com.stormphoenix.ogit.entity.github.GitSearchResult;
 import com.stormphoenix.ogit.entity.github.GitUser;
@@ -25,7 +26,7 @@ public class LogInteractor {
     }
 
     public Observable<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>> getABInfo(String name) {
-        return logApi.loadABInfo(name);
+        return logApi.loadABInfo(name,1,3, 2);
     }
 
     public Observable<Response<Vacant>> batchLog(String logs) {

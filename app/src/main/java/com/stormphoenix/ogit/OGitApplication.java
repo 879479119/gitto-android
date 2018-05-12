@@ -15,6 +15,7 @@ import com.stormphoenix.ogit.utils.PreferenceUtils;
  */
 
 public class OGitApplication extends Application {
+    private static final String TAG = "OGitApplication";
     public static OGitApplication instance = null;
     // 是重新启动了应用吗？
     public boolean isFirstIn = true;
@@ -29,7 +30,15 @@ public class OGitApplication extends Application {
 
         String sessionId = EncodingUtils.uuid(name);
 
-        new Tracker(getApplicationContext(), sessionId, name);
+        Log.i(TAG, "onCreate:" + name);
+        if (name != null) {
+            Tracker tracker = new Tracker(getApplicationContext(), sessionId, name);
+            tracker.trackEnterApp("app://enter", 0);
+        } else {
+            Tracker tracker = new Tracker(getApplicationContext(), sessionId, "unknown");
+            tracker.trackEnterApp("app://enter", 0);
+        }
+
     }
 
     @Override

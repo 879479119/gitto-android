@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitBranch;
 import com.stormphoenix.ogit.entity.github.GitEmpty;
 import com.stormphoenix.ogit.entity.github.GitRepository;
@@ -128,6 +129,7 @@ public class RepositoryPresenter extends BasePresenter<RepositoryView> {
     private void initRepositoryView() {
         assert mRepository != null;
         initToolbarStatus();
+        Tracker.getInstance().trackPageShow("app://repo?" + mRepository.getFullName(), "app://");
         mView.initWebView(mRepository.getOwner().getLogin(), mRepository.getName());
 //        mView.setDescription(mRepository.getDescription());
 //        mView.setStarCount(String.valueOf(mRepository.getStargazersCount()));

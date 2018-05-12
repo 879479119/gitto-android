@@ -33,7 +33,7 @@ public class MainPresenter extends BasePresenter<MainView> {
 
 
     @Inject
-    public MainPresenter(Context context) {
+    MainPresenter(Context context) {
         mContext = context;
         mInteractor = new NotifyInteractor(context);
         logInteractor = new LogInteractor(context);
@@ -88,7 +88,6 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onNext(Response<List<GitNotification>> response) {
-                        Log.e(TAG, "onNext: ");
                         mView.saveNotificationMessage(response.body());
                     }
                 });

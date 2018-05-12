@@ -13,7 +13,7 @@ import rx.Observable;
 public interface LogApi {
 
     @GET("http://test.com/api/hybrid/abInfo")
-    Observable<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>> loadABInfo(@Query("name") String name);
+    Observable<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>> loadABInfo(@Query("name") String name, @Query("app") int id, @Query("platform") int platform, @Query("version") int version);
 
     @GET("http://log.test.com/utm.gif")
     Observable<Response<Vacant>> batchLog(@Query("logs") String logs);

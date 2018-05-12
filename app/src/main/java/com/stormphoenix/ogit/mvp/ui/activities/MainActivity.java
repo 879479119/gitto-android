@@ -119,8 +119,8 @@ public class MainActivity extends TabPagerActivity<FragmentsAdapter> implements 
 //
 //        Tracker tracker = new Tracker(getApplicationContext(), sessionId, name);
         Tracker tracker = Tracker.getInstance();
-        tracker.trackEnterApp("app:main", launchTiming);
-        tracker.trackPageShow("app://main", "");
+//        tracker.trackEnterApp("app:main", launchTiming);
+//        tracker.trackPageShow("", "app://MainActivity");
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -68,6 +69,11 @@ public abstract class HybridActivity extends BaseActivity {
 
     protected LinearLayout getLayout() { return null; }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     public void initWebView(String user, String repo) {
 
@@ -95,26 +101,30 @@ public abstract class HybridActivity extends BaseActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.i(TAG, "show " + url);
+                Log.i(TAG, "source " + view.getUrl());
+
+                int index = view.getUrl().indexOf('?') == -1 ? view.getUrl().length() : view.getUrl().indexOf('?');
+                int index2 = url.indexOf('?') == -1 ? url.length() : url.indexOf('?');
 
                 if (Constants.isHybridPage(url)) {
                     if (url.startsWith("http://test.com/repo")) {
                         Log.i(TAG, "shouldOverrideUrlLoading: " + url);
-                        Tracker.getInstance().trackPageShow("app://repo?url=" + view.getUrl(), "app://user?url=" + url);
+                        Tracker.getInstance().trackPageShow("app://repo?" + view.getUrl().substring(0, index), "app://user?" + url.substring(0, index2));
                         ActivityUtils.startActivity(HybridActivity.this, RepositoryActivity.getIntent(HybridActivity.this));
                         return false;
                     }
                     if (url.startsWith("http://test.com/user")) {
                         Log.i(TAG, "shouldOverrideUrlLoading: " + url);
-                        Tracker.getInstance().trackPageShow("app://user?url=" + view.getUrl(), "app://repo?url=" + url);
+                        Tracker.getInstance().trackPageShow("app://user?" + view.getUrl().substring(0, index), "app://repo?" + url.substring(0, index2));
                         ActivityUtils.startActivity(HybridActivity.this, UserProfileActivity.getIntent(HybridActivity.this));
                         return false;
                     }
                 } else {
                     Log.i(TAG, "最好是跳转到一个单独的webview去");
+                    return false;
                 }
 
-                view.loadUrl(url);
+//                view.loadUrl(url);
                 return true;
             }
 
@@ -170,9 +180,9 @@ public abstract class HybridActivity extends BaseActivity {
 //        ABInfo response = gson.fromJson(config, ABInfo.class);
         Log.i(TAG, "addSearchPart: " + config);
         return url + "?"
-                + "app=" + 213
-                + "&version=" + 123
-                + "&platform=" + 66
+                + "app=" + 1
+                + "&version=" + 2
+                + "&platform=" + 3
                 + "&testArray=" + config;
     }
 }

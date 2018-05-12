@@ -4,8 +4,10 @@ import android.content.Context;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.stormphoenix.ogit.entity.log.ABInfo;
 import com.stormphoenix.ogit.entity.log.Response;
+import com.stormphoenix.ogit.log.Base;
 import com.stormphoenix.ogit.log.Log;
 import com.stormphoenix.ogit.log.Vacant;
 import com.stormphoenix.ogit.mvp.model.interactor.LogInteractor;
@@ -38,27 +40,32 @@ public class LogMaster {
 
     public LogMaster(Context context) {
         mContext = context;
+        tracker = Tracker.getInstance();
 //        this.logInteractor = new LogInteractor(context);
 //        this.logStorage = new LogStorage(mContext);
     }
 
     @JavascriptInterface
     public void setLog (String string) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                        .create();
         Log log;
         try {
             log = gson.fromJson(string, Log.class);
         } catch (Exception err) {
             log = new Log();
-            android.util.Log.e(TAG, err.getMessage());
+            android.util.Log.e(TAG, err.toString());
         }
 
-        log.getBase().setName(PreferenceUtils.getUsername(mContext));
-        log.getBase().setSessionId(Tracker.getInstance().getSessionId());
+        if (log.getBase() != null) {
+            log.getBase().setName(PreferenceUtils.getUsername(mContext));
+            log.getBase().setSessionId(Tracker.getInstance().getSessionId());
+        }
 
         tracker.saveLogs(string);
 
-        tracker.sendBatchLogs(string);
+        tracker.sendBatchLogs(gson.toJson(log));
 
         android.util.Log.i(TAG, log.getBase().getName());
     }

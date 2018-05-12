@@ -6,6 +6,11 @@ public class AB {
 
     private int paramId;
 
+    public AB(int testId, int paramId) {
+        this.testId = testId;
+        this.paramId = paramId;
+    }
+
     public int getTestId() {
         return testId;
     }

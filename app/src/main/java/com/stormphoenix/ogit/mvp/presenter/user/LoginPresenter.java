@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitEmpty;
 import com.stormphoenix.ogit.entity.github.GitToken;
 import com.stormphoenix.ogit.entity.github.GitUser;
@@ -16,6 +17,7 @@ import com.stormphoenix.ogit.mvp.view.LoginView;
 import com.stormphoenix.ogit.mvp.view.base.BaseUIView;
 import com.stormphoenix.ogit.shares.rx.RxJavaCustomTransformer;
 import com.stormphoenix.ogit.shares.rx.subscribers.DefaultUiSubscriber;
+import com.stormphoenix.ogit.utils.EncodingUtils;
 import com.stormphoenix.ogit.utils.PreferenceUtils;
 
 import java.net.SocketTimeoutException;
@@ -176,6 +178,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         PreferenceUtils.putString(mContext, PreferenceUtils.PASSWORD, password);
         PreferenceUtils.putString(mContext, PreferenceUtils.TOKEN, token.getToken());
         PreferenceUtils.putBoolean(mContext, PreferenceUtils.IS_LOGIN, true);
+        Tracker.getInstance().setName(username).setSessionId(EncodingUtils.uuid(username));
         Log.e(TAG, "PreferenceUtils: Username : " + username + '\n'
                 + "Password : " + password + '\n' + "Token : " + token);
     }

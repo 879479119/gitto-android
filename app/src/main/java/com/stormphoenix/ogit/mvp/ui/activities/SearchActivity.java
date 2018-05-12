@@ -63,7 +63,7 @@ public class SearchActivity extends TabPagerActivity<FragmentsAdapter> {
         this.keyword = query;
         getSupportActionBar().setTitle(query);
 
-        Tracker.getInstance().trackSearch("app://search", query);
+        Tracker.getInstance().trackSearch("app://SearchActivity", query);
     }
 
     public String getSearchKeyWord() {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.entity.github.GitEmpty;
 import com.stormphoenix.ogit.entity.github.GitRepository;
 import com.stormphoenix.ogit.entity.github.GitUser;
@@ -52,33 +53,6 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
         super(context);
         mInteractor = new UserInteractor(mContext);
         logInteractor = new LogInteractor(mContext);
-    }
-
-    public void fetchABInfo() {
-        logInteractor.getABInfo(mUser.getName())
-                .compose(RxJavaCustomTransformer.defaultSchedulers())
-                .subscribe((Observer<? super Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>>) new Subscriber<Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>>>() {
-                    @Override
-                    public void onCompleted() {
-                        mView.stopProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.stopProgress();
-                        mView.showMessage(e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Response<com.stormphoenix.ogit.entity.log.Response<ABInfo>> response) {
-                        if (response.isSuccessful()) {
-                            Log.i(TAG, "onNext: " + response.body().getMeta().getCode());
-                        } else {
-                            mView.showMessage(response.message());
-                        }
-                        mView.stopProgress();
-                    }
-                });
     }
 
     public void refreshViewInfo() {
@@ -198,6 +172,8 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
     }
 
     private void setUpUserInfo() {
+        Tracker.getInstance().trackPageShow("app://user?" + mUser.getName(), "app://");
+
         mView.setFollowersCount(String.valueOf(mUser.getFollowers()));
         mView.setFollowingCount(String.valueOf(mUser.getFollowing()));
 
