@@ -75,6 +75,10 @@ public class GitRepository {
     @SerializedName("default_branch")
     private String defaultBranch;
 
+    public GitRepository(String url) {
+        this.url = url;
+    }
+
     public long getId() {
         return id;
     }

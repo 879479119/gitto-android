@@ -56,9 +56,9 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
     }
 
     public void refreshViewInfo() {
-        mView.loadHeaderImage(mUser.getAvatarUrl());
+//        mView.loadHeaderImage(mUser.getAvatarUrl());
         mView.showProgress();
-        mView.setOwnerDescription(mUser.getHtmlUrl());
+//        mView.setOwnerDescription(mUser.getHtmlUrl());
         mInteractor.loadUser(mUser.getLogin())
                 .compose(RxJavaCustomTransformer.defaultSchedulers())
                 .subscribe(new Subscriber<Response<GitUser>>() {
@@ -173,6 +173,9 @@ public class UserProfilePresenter extends OwnerProfilePresenter<UserDetailsView>
 
     private void setUpUserInfo() {
         Tracker.getInstance().trackPageShow("app://user?" + mUser.getName(), "app://");
+
+        mView.loadHeaderImage(mUser.getAvatarUrl());
+        mView.setOwnerDescription(mUser.getHtmlUrl());
 
         mView.setFollowersCount(String.valueOf(mUser.getFollowers()));
         mView.setFollowingCount(String.valueOf(mUser.getFollowing()));

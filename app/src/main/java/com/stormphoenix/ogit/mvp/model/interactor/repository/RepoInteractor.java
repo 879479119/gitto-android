@@ -1,6 +1,7 @@
 package com.stormphoenix.ogit.mvp.model.interactor.repository;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.stormphoenix.ogit.entity.github.GitBranch;
 import com.stormphoenix.ogit.entity.github.GitEmpty;
@@ -21,6 +22,7 @@ import rx.Observable;
  * Created by wanlei on 18-3-1.
  */
 public class RepoInteractor {
+    private static final String TAG = "RepoInteractor";
     private RepoApi repoApi = null;
     private CodeFileApi codeFileApi = null;
     private Context mContext = null;

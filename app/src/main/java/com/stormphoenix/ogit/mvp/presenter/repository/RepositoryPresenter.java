@@ -59,7 +59,7 @@ public class RepositoryPresenter extends BasePresenter<RepositoryView> {
     public void onMainThreadEvent(GitRepository repository) {
         mRepository = repository;
         EventBus.getDefault().unregister(this);
-        if (!isRepoFragmentary(mRepository)) {
+        if (false) {
             loadMoreRepoDetails();
             initRepositoryView();
         } else {

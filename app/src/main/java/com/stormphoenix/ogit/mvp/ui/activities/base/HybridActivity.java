@@ -32,7 +32,9 @@ import com.stormphoenix.ogit.bridge.LogMaster;
 import com.stormphoenix.ogit.bridge.Tracker;
 import com.stormphoenix.ogit.dagger2.component.DaggerActivityComponent;
 import com.stormphoenix.ogit.dagger2.module.ContextModule;
+import com.stormphoenix.ogit.entity.github.GitRepository;
 import com.stormphoenix.ogit.entity.github.GitTrendRepository;
+import com.stormphoenix.ogit.entity.github.GitUser;
 import com.stormphoenix.ogit.entity.log.ABInfo;
 import com.stormphoenix.ogit.entity.log.Response;
 import com.stormphoenix.ogit.mvp.presenter.repository.RepositoryPresenter;
@@ -48,8 +50,11 @@ import com.stormphoenix.ogit.utils.PreferenceUtils;
 import com.stormphoenix.ogit.utils.TextTools;
 import com.stormphoenix.ogit.widget.KeyValueLabel;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -107,14 +112,24 @@ public abstract class HybridActivity extends BaseActivity {
                 int index2 = url.indexOf('?') == -1 ? url.length() : url.indexOf('?');
 
                 if (Constants.isHybridPage(url)) {
-                    if (url.startsWith("http://test.com/repo")) {
+                    if (url.startsWith("http://test.com/repo/")) {
                         Log.i(TAG, "shouldOverrideUrlLoading: " + url);
                         Tracker.getInstance().trackPageShow("app://repo?" + view.getUrl().substring(0, index), "app://user?" + url.substring(0, index2));
+//                        EventBus.getDefault().postSticky(new GitRepository());
+                        Pattern pattern = Pattern.compile("[?/]");
+                        String str[] = url.substring("http://test.com/repo/".length()).split(pattern.toString());
+                        Log.i(TAG, "repo: " + str[0] + "/" + str[1]);
+                        EventBus.getDefault().postSticky(new GitRepository("https://api.github.com/repos/" + str[0] + "/" + str[1]));
+
                         ActivityUtils.startActivity(HybridActivity.this, RepositoryActivity.getIntent(HybridActivity.this));
                         return false;
                     }
-                    if (url.startsWith("http://test.com/user")) {
+                    if (url.startsWith("http://test.com/user/")) {
                         Log.i(TAG, "shouldOverrideUrlLoading: " + url);
+
+                        String str[] = url.substring("http://test.com/user/".length()).split("/");
+                        Log.i(TAG, "shouldOverrideUrlLoading: " + str[0]);
+                        EventBus.getDefault().postSticky(new GitUser(str[0]));
                         Tracker.getInstance().trackPageShow("app://user?" + view.getUrl().substring(0, index), "app://repo?" + url.substring(0, index2));
                         ActivityUtils.startActivity(HybridActivity.this, UserProfileActivity.getIntent(HybridActivity.this));
                         return false;

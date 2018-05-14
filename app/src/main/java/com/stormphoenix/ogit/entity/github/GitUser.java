@@ -74,6 +74,10 @@ public class GitUser implements Serializable {
     public GitUser() {
     }
 
+    public GitUser(String login) {
+        this.login = login;
+    }
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
